@@ -1,7 +1,7 @@
 {
   "name": "no-ai-slop",
-  "version": "1.0.6",
-  "description": "Removes 20+ patterns of AI slop from any piece of writing.",
+  "version": "1.1.0",
+  "description": "Removes 20+ patterns of AI slop and fixes statistical fingerprints (perplexity, burstiness, cohesion, vocabulary clustering, paragraph symmetry) from any piece of writing while preserving your real voice.",
   "author": {
     "name": "Peter Yang",
     "url": "https://creatoreconomy.so"
@@ -19,13 +19,15 @@
   "interface": {
     "displayName": "No AI Slop",
     "shortDescription": "Remove 20+ AI slop patterns",
-    "longDescription": "This plugin removes 20+ patterns of AI slop from your writing without flattening your personal voice. Slop patterns that it removes include:\n\nBinary contrasts: “It’s not X. It’s Y.”\n\nThroat-clearing openers: “Here’s the thing,” “Let me be clear”\n\nFaux-insight setups: “What nobody tells you,” “The part everyone misses”\n\nColon reveals: “The best part: it learns.”\n\nFake-profound endings: “The future isn’t coming. It’s already here.”\n\n...and more.\n\nUse it to remove AI slop from your writing or detect named slop patterns in a piece of writing. If you like this plugin, please star it on GitHub: https://github.com/petergyang/no-ai-slop",
+    "longDescription": "This plugin removes 20+ patterns of AI slop from your writing without flattening your personal voice — and now also fixes the deeper statistical fingerprints that AI detectors notice: low perplexity (default word choice), flat burstiness (all sentences the same length), glass-smooth cohesion (every transition explicit), vocabulary clustering (overused word families), paragraph symmetry (evenly sized paragraphs), and over-explained signposting. Surface slop it removes includes:\n\nBinary contrasts: “It’s not X. It’s Y.”\n\nThroat-clearing openers: “Here’s the thing,” “Let me be clear”\n\nFaux-insight setups: “What nobody tells you,” “The part everyone misses”\n\nColon reveals: “The best part: it learns.”\n\nFake-profound endings: “The future isn’t coming. It’s already here.”\n\n...and more.\n\nIt preserves real human voice markers (contractions, hedges, asides, natural cadence) without faking imperfection — no added typos, manufactured slang, or invented anecdotes. Those tricks backfire. Real human writing is the goal.\n\nUse it to remove AI slop from your writing or detect named slop patterns in a piece of writing. If you like this plugin, please star it on GitHub: https://github.com/petergyang/no-ai-slop",
     "developerName": "Peter Yang",
     "category": "Productivity",
     "capabilities": [
       "Edit",
       "Detect",
-      "Preserve voice"
+      "Preserve voice",
+      "Perplexity & burstiness",
+      "Statistical fingerprint fixes"
     ],
     "websiteURL": "https://creatoreconomy.so/p/use-my-no-ai-slop-skill-to-remove-20-ai-slop-patterns",
     "privacyPolicyURL": "https://github.com/petergyang/no-ai-slop/blob/main/PRIVACY.md",
