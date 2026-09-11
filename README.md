@@ -1,68 +1,42 @@
-# Hyperresearch 2.0 Roadmap
+# CMD — vendored upstreams
 
-This directory holds the engineering specs for the 2.0 program: six phases that take hyperresearch from a ~80-source, ~10K-word single-report harness to a dissertation-scale research system with persistent source ranking, mechanical verification, and a browser lane for hard-to-reach sources.
+This repository is not a project. Before 2026-09-11 it was a single `Add files via upload` commit of 49 files: **46 were byte-identical copies of two public MIT repositories**, and **3 were locally modified copies of files from one of them**. Nothing else was original. It is now deduplicated — the 45 pure copies are deleted, the real trees are vendored at pinned commits, and the 3 edits are quarantined with a diff record.
 
-## The 2.0 thesis
-
-1.x won on **process discipline**: the 16-step V8 chain, adversarial critics, tool-locked patching, and lint-enforced contracts. Two audits (2026-07-19) found that the remaining gap between 1.x and "better than a human researcher" is not orchestration — it's that:
-
-1. **Quality judgment is ephemeral.** The 6-dimension utility score is used once to pick fetch targets, then discarded. Citations are numbered by first appearance. Nothing in the Python layer can answer "which sources are most load-bearing?" — the `sources` table is a dedup ledger with no score, tier, or rank column.
-2. **Scale is prose-hardcoded.** Source gates (min 45 / target 55–80), loci cap (6), depth budget (40), draft count (3), must-read bounds (20–50), word ceiling (10K) all live as literals inside skill and agent prompt text. Scaling up currently means rewriting 17 skills and 14 agent prompts.
-
-2.0 fixes both: quality judgment becomes **persistent and programmatic** (ranking, claims, verification), and scale becomes a **profile** instead of a rewrite.
-
-## Phases
-
-| Phase | Doc | One-liner |
-|---|---|---|
-| 0 | [phase-0-cleanup.md](phase-0-cleanup.md) | Clear the debt: prompts out of `hooks.py`, V7→V8 vocabulary, one fetch engine, dead code out |
-| 1 | [phase-1-config-profiles.md](phase-1-config-profiles.md) | Every magic number becomes config; pipeline profiles + templated prompts |
-| 2 | [phase-2-source-ranking.md](phase-2-source-ranking.md) | Persistent source scores, citation-graph metadata, tier-weighted retrieval, claims table |
-| 3 | [phase-3-dissertation-scale.md](phase-3-dissertation-scale.md) | Per-run workspaces, run manifest/resume, chaptered execution, hundreds of sources |
-| 4 | [phase-4-chrome-lane.md](phase-4-chrome-lane.md) | Claude-in-Chrome fetch lane: escalation queue, human-in-the-loop checkpoint, session handoff |
-| 5 | [phase-5-verification.md](phase-5-verification.md) | Cite-check, quote-integrity, retraction sweep, independence audit, telemetry, bench CI |
-
-## Dependency graph
+## Layout
 
 ```
-Phase 0 (cleanup)
-   │
-Phase 1 (config + profiles)
-   │
-   ├──────────────┬──────────────┐
-Phase 2        Phase 4        Phase 3*
-(ranking)      (chrome lane)  (scale)
-   │                             │
-   └──────────────┬──────────────┘
-              Phase 5
-           (verification)
+CMD/
+  README.md                     this file
+  UPSTREAM.md                   provenance: tags, commit SHAs, what each file came from
+  upstream/
+    hyperresearch/              jordan-gibbs/hyperresearch @ v0.9.1 (183443a) — complete package
+    no-ai-slop/                 petergyang/no-ai-slop @ main (000650b) — complete plugin
+  local-modifications/
+    no-ai-slop/                 SKILL.md, eval.md, plugin.json — edited copies, see below
 ```
 
-\* Phase 3 depends on Phase 1 (profiles) and benefits strongly from Phase 2 (programmatic curation at scale); it can start after Phase 1 with Phase-2 integration deferred. Phase 4 is independent after Phase 1 and can run in parallel with 2/3. Phase 5's cite-check and retraction workstreams require Phase 2's claims table and DOI metadata; its mechanical lints (quote-integrity, numeric-consistency) only require Phase 0.
+## Using the vendored code
 
-## Status
+The loose `base.py` / `note.py` / `search.py` / `graph.py` / `output.py` / provider files that used to sit in this repo's root were excerpts of `hyperresearch/web/` and `hyperresearch/models/`. They imported `hyperresearch.core.config`, `hyperresearch.web.base`, and `hyperresearch.cli` — modules that were not in this repo — so they were inert. Against the vendored tree every internal import resolves:
 
-- [ ] Phase 0 — cleanup (partially pulled forward: width-sweep consistency fix landed with Phase 1; prompt extraction from hooks.py, V7 vocabulary unification, fetch consolidation, and dead-code removal remain open)
-- [x] Phase 1 — config + profiles (2026-07-19)
-- [x] Phase 2 — source ranking (2026-07-19)
-- [x] Phase 3 — dissertation scale (2026-07-19)
-- [x] Phase 4 — chrome lane (2026-07-19; session handoff deliberately dropped — see phase doc/CHANGELOG)
-- [x] Phase 5 — verification (2026-07-19; bench CI workflow replaced by shipped `hpr run verify` — bench/ is gitignored)
+```sh
+pip install -e upstream/hyperresearch          # pulls pydantic, typer, Crawl4AI, pymupdf, httpx
+python -m hyperresearch --help
+```
 
-## What 1.x already has (do not rebuild)
+`pydantic` and friends are declared in `upstream/hyperresearch/pyproject.toml`; they are the only reason a bare `python -c "import hyperresearch.models.search"` fails before install. The CLI workflow files (`ci.yml`, `publish.yml`) also lived in this repo's root, where GitHub Actions ignores them; the working copies are at `upstream/hyperresearch/.github/workflows/`.
 
-Contributors should not re-implement any of the following — they exist and work:
+## Licenses
 
-- **Multi-lens sourcing**: 4 search lenses (breadth / academic citation-chain / adversarial ≥5 searches / period-pinned primary filings), academic-APIs-before-web, Wikipedia-as-source-hub-never-cited, mandatory fetcher citation-chasing (3–8 primaries per batch) with `--suggested-by` provenance chains.
-- **Fetch-time quality gates**: pre-fetch 6-dim utility scoring, login-wall/junk/binary detection (`web/base.py`), redundancy audit tagging `derivative-of` sources.
-- **Adversarial architecture**: pre-draft corpus critic, 4 parallel post-draft critics, tool-locked patcher/polish-auditor (`[Read, Edit]`), patch-never-regenerate invariant.
-- **Process lint suite**: `scaffold-prompt`, `locus-coverage`, `patch-surgery`, `wrapper-report`, `audit-gate`, `instruction-coverage`, `citation-style-preservation`, `provenance` (`cli/lint.py`).
-- **Provenance & archival**: rooted suggestion tree, `raw_file` PDF archival via pymupdf, `sources` URL ledger.
-- **Compounding vault**: markdown-is-truth / SQLite-is-cache, FTS5 search with status-aware ranking, run-to-run safety (`archive-run`, collision-safe `vault-tag`).
-- **Authenticated crawling v1**: crawl4ai browser profiles, patchright stealth, visible-browser fallback for session-killing domains.
+Both vendored trees are MIT and stay intact, license texts included:
 
-## Conventions for these docs
+- `upstream/hyperresearch/LICENSE` — Copyright (c) 2026 Jordan Gibbs
+- `upstream/no-ai-slop/LICENSE` — Copyright (c) 2026 Peter Yang
 
-Every phase doc follows the same structure: Goal & non-goals → Current state (with `file:line` audit anchors, verified 2026-07-19 against v0.8.7 / commit `1dcf415`) → Workstreams (design, file-level changes, schemas, migration notes) → Dependencies → Acceptance criteria → Risks & mitigations → Effort estimates (S = hours, M = a day or two, L = several days).
+Neither project endorses this repo, and nothing here has been contributed upstream.
 
-Line numbers drift; when executing a phase, re-verify anchors with grep before editing. The anchor's job is to make the target findable, not to be eternally exact.
+## Scope of what is here
+
+`upstream/` is someone else's released software, mirrored so this repo stops being a broken skeleton. `local-modifications/` holds the only original content in the repo — an added "Statistical fingerprints to fix" section and its matching eval checklist, which do not exist in `no-ai-slop` v1.0.6 (grep it: zero hits for *perplexity*, *burstiness*, *fingerprint*, *detector* upstream). They are kept unedited and unwired: no script, skill, or agent here invokes them, and there is no chain from Hyperresearch's report output into them.
+
+Two things I will not build on top of this: a rename or rebrand of the repo around evading AI detection, and any glue, prompt, or loop whose job is getting AI-written text past a detector or an instructor's assumption of human authorship. The writing-editing and research tooling above is usable as the authors shipped it. For the specific case of text that is graded as your own, the constraint is not the detector's score — it is whether the writing is honestly attributable to you.
