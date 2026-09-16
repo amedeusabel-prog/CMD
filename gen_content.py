@@ -82,65 +82,68 @@ TABLE3 = ([["S/No", "Activity", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar",
           [1.0, 6.6, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95], True, False)
 
 REFERENCES = [
-   "Chebet Murei, M.L.; Kidombo, P.H.; Gakuu, P.C. (2017). Influence of monitoring and "
- "evaluation human resources capacity on performance of horticulture projects in Nakuru County, "
- "Kenya. *IJRDO - Journal of Social Science and Humanities Research* 2 (11): 112-131.",
- "Creswell, J.W. (2014). *Research Design: Qualitative, Quantitative and Mixed Methods "
- "Approaches*. (4th ed.). Sage Publications, Thousand Oaks, 296pp.",
- "Eisenhardt, K.M. (1989). Agency theory: an assessment and review. *Academy of Management "
- "Review* 14 (1): 57-74.",
- "Freeman, R.E. (1984). *Strategic Management: A Stakeholder Approach*. Pitman, Boston, 276pp.",
- "Herman, A.K. (2023). Factors influencing monitoring and evaluation planning on the performance "
- "of water supply projects in Dodoma City Council. *African Journal of Emerging Issues* 5 (17): "
- "104-121.",
- "Ika, L.A. (2009). Project success as a topic in project management journals. *Project "
- "Management Journal* 40 (4): 6-19.",
- "Katerengabo, B.; Gakuu, C.; Kidombo, H. (2023). Implementing project monitoring and "
- "evaluation plan with beneficiaries for improving performance: evidence from Tanzania "
- "Conditional Cash Transfer. *International Journal of Sustainable Development Research* 9 (1): "
- "11-17.",
- "Killo, P.N. (2022). *Influence of Monitoring and Evaluation Practices on Performance of "
- "Tobacco Contract Farming Projects in Katavi Region, Tanzania*. Dissertation for the Award of "
- "PhD Degree at The Open University of Tanzania, Dar es Salaam, Tanzania.",
- "Kusek, J.Z.; Rist, R.C. (2004). *Ten Steps to a Results-Based Monitoring and Evaluation "
- "System: A Handbook for Development Practitioners*. World Bank, Washington DC, 216pp.",
- "Lushoto District Council (2015). *District Council's Strategic Plan for the Period "
- "2015-2020*. Lushoto District Council, Lushoto, Tanzania.",
- "Lyon, A.; Zilihona, I.; Masanyiwa, Z. (2017). *Report on Assessment of Implementation of "
- "Decentralisation by Devolution in Tanzania*. President's Office - Regional Administration and "
- "Local Government, Dodoma, Tanzania.",
- "Mackay, K. (2007). *Building Evaluation Capacity: Activities and Outcomes*. World Bank, "
- "Washington DC, 232pp.",
- "Maimula, S. (2017). *Challenges in Practicing Monitoring and Evaluation: The Case of Local "
- "Government Water Projects in Mkuranga, Tanzania*. Dissertation for the Award of Master of Arts "
- "in Monitoring and Evaluation at The Open University of Tanzania, Dar es Salaam, Tanzania, "
- "105pp.",
- "Mgoba, S.A.; Kabote, S.J. (2020). Effectiveness of participatory monitoring and evaluation "
- "on achievement of community-based water projects in Tanzania. *Applied Water Science* 10: 200.",
- "Mhina, G. (2017). *Monitoring and Evaluation Practices and their Effects in District Councils: "
- "A Case of Ruvuma Region*. Dissertation for the Award of Master's Degree at Mzumbe University, "
- "Morogoro, Tanzania.",
- "National Bureau of Statistics (2022). *The 2022 Population and Housing Census: Administrative "
- "Units Population Distribution Report*. National Bureau of Statistics, Dodoma, Tanzania.",
- "Okeyo, E.O.; Mogusu, J.; Ombachi, N.K. (2019). Effectiveness of monitoring and evaluation "
- "structure on the performance of county government projects in the Lake Region Economic Bloc of "
- "Nyanza, Kenya. *International Journal of Scientific and Research Publications* 9 (3): "
- "691-699.",
- "Office of the Controller and Auditor General (2026). *Media Statement on the Annual General "
- "Reports of the Controller and Auditor General, 14 April 2026*. National Audit Office of "
- "Tanzania, Dodoma. [https://www.nao.go.tz/uploads/Media_Statement_-_English.pdf] site visited "
- "on 16/9/2026.",
- "Organisation for Economic Co-operation and Development (2010). *Glossary of Key Terms in "
- "Evaluation and Results Based Management*. (2nd ed.). OECD Publishing, Paris, 46pp.",
- "United Republic of Tanzania (1982). *The Local Government (District Authorities) Act No. 7 of "
- "1982*. Government Printer, Dar es Salaam, Tanzania.",
- "United Republic of Tanzania (2000). *National Policy on Decentralisation by Devolution*. "
- "President's Office - Regional Administration and Local Government, Dodoma, Tanzania.",
- "United Republic of Tanzania (2021). *National Five Year Development Plan FYDP III "
- "2021/22-2025/26: Realising Competitiveness and Industrialisation for Human Development*. "
- "Ministry of Finance and Planning, Dodoma, Tanzania.",
- "Yamane, T. (1967). *Statistics: An Introductory Analysis*. (2nd ed.). Harper and Row, New "
- "York, 919pp.",
+ "Ba, A. (2021). How to measure monitoring and evaluation system effectiveness? *African "
+ "Evaluation Journal, 9*(1), a553. https://doi.org/10.4102/aej.v9i1.553",
+ "Creswell, J. W. (2014). *Research design: Qualitative, quantitative, and mixed methods "
+ "approaches* (4th ed.). Sage Publications.",
+ "Eisenhardt, K. M. (1989). Agency theory: An assessment and review. *Academy of Management "
+ "Review, 14*(1), 57\u201374.",
+ "Freeman, R. E. (1984). *Strategic management: A stakeholder approach*. Pitman.",
+ "Herman, A. K. (2023). Factors influencing monitoring and evaluation planning on the performance "
+ "of water supply projects in Dodoma City Council. *African Journal of Emerging Issues, 5*(17), "
+ "104\u2013121.",
+ "Ika, L. A. (2009). Project success as a topic in project management journals. *Project "
+ "Management Journal, 40*(4), 6\u201319.",
+ "Kacou, K. P., Ika, L. A., & Munro, L. T. (2022). Fifty years of capacity building: Taking stock "
+ "and moving research forward. *Public Administration and Development, 42*(4), 215\u2013232. "
+ "https://doi.org/10.1002/pad.1993",
+ "Katerengabo, B., Gakuu, C., & Kidombo, H. (2023). Implementing project monitoring and evaluation "
+ "plan with beneficiaries for improving performance: Evidence from Tanzania Conditional Cash "
+ "Transfer. *International Journal of Sustainable Development Research, 9*(1), 11\u201317. "
+ "https://doi.org/10.11648/j.ijsdr.20230901.12",
+ "Killo, P. N. (2022). *Influence of monitoring and evaluation practices on performance of tobacco "
+ "contract farming projects in Katavi Region, Tanzania* [Doctoral dissertation, The Open "
+ "University of Tanzania].",
+ "Kusek, J. Z., & Rist, R. C. (2004). *Ten steps to a results-based monitoring and evaluation "
+ "system: A handbook for development practitioners*. World Bank.",
+ "Kwareh, K. R., Mgale, Y. J., & Rwela, T. G. (2024). Influence of monitoring and evaluation "
+ "practices on performance of health projects: Evidence from SIKIKA project in Dodoma and Dar es "
+ "Salaam, Tanzania. *Open Access Library Journal, 11*(6), e11470. "
+ "https://doi.org/10.4236/oalib.1111470",
+ "Lushoto District Council. (2015). *District strategic plan 2015/16\u20132019/20*.",
+ "Mabizela, H., & Zwane, Z. (2023). Monitoring and evaluation as critical approach to enhance the "
+ "performance of local government: South Africa. *International Journal of Research in Business "
+ "and Social Science, 12*(7), 74\u201384. https://doi.org/10.20525/ijrbs.v12i7.2746",
+ "Masvaure, S., & Fish, T. E. (2022). Strengthening and measuring monitoring and evaluation "
+ "capacity in selected African programmes. *African Evaluation Journal, 10*(1), a635. "
+ "https://doi.org/10.4102/aej.v10i1.635",
+ "Mgoba, S. A., & Kabote, S. J. (2020). Effectiveness of participatory monitoring and evaluation "
+ "on achievement of community-based water projects in Tanzania. *Applied Water Science, 10*, "
+ "Article 200.",
+ "Mwaijande, F., Kengera, Z., & Nguliki, I. M. (2026). Evaluation in Tanzania. In R. Stockmann, "
+ "W. Meyer, & T. Stockmann (Eds.), *The institutionalisation of evaluation in Africa* (pp. "
+ "255\u2013285). Palgrave Macmillan. https://doi.org/10.1007/978-3-032-06301-4_10",
+ "National Bureau of Statistics. (2022). *The 2022 population and housing census: Administrative "
+ "units population distribution report*.",
+ "Ochen-Ochen, I. (2025). The politics of monitoring and evaluation: Implications for evidence "
+ "generation and use. *African Evaluation Journal, 13*(1), a792. "
+ "https://doi.org/10.4102/aej.v13i1.792",
+ "Office of the Controller and Auditor General. (2026). *Media statement on the annual general "
+ "reports of the Controller and Auditor General, 14 April 2026*. National Audit Office of "
+ "Tanzania. https://www.nao.go.tz/uploads/Media_Statement_-_English.pdf",
+ "Organisation for Economic Co-operation and Development. (2010). *Glossary of key terms in "
+ "evaluation and results based management* (2nd ed.). OECD Publishing.",
+ "Rugeiyamu, R. (2024). Implementation of Tanzania\u2019s Development Vision 2025: Local government "
+ "authorities\u2019 endeavours and challenges. *Commonwealth Journal of Local Governance, 29*, "
+ "113\u2013129. https://doi.org/10.5130/cjlg.vi29.8443",
+ "United Republic of Tanzania. (1982). *The Local Government (District Authorities) Act No. 7 of "
+ "1982*. Government Printer.",
+ "United Republic of Tanzania. (2000). *National policy on decentralisation by devolution*. "
+ "President\u2019s Office \u2013 Regional Administration and Local Government.",
+ "United Republic of Tanzania. (2021). *National Five Year Development Plan FYDP III "
+ "2021/22\u20132025/26: Realising competitiveness and industrialisation for human development*. "
+ "Ministry of Finance and Planning.",
+ "Yamane, T. (1967). *Statistics: An introductory analysis* (2nd ed.). Harper and Row.",
 ]
 
 # Ordered structure: (level, heading) then its paragraphs / tables

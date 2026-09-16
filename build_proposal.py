@@ -12,6 +12,7 @@ APA author-date citations; references listed alphabetically with all authors.
 """
 import math
 import re
+import sys
 from docx import Document
 from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_TABLE_ALIGNMENT
@@ -21,6 +22,81 @@ from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
 from proposal_content import BLOCKS, REFERENCES, TITLE
+
+# ------------------------------------------------------------- build modes --
+# python3 build_proposal.py                -> full proposal (Ch. 1-3 + budget
+#                                             + action plan + 25 references)
+# python3 build_proposal.py --chapter-one  -> standalone Chapter One document
+#                                             (title page + Ch. 1 + only the
+#                                             references cited in Chapter One)
+CHAPTER_ONE_ONLY = "--chapter-one" in sys.argv
+
+# Corporate authors are cited in the text by their abbreviation, so the matcher
+# needs both the full name and the short form.
+CORPORATE_TOKENS = {
+    "United Republic of Tanzania": ["URT", "United Republic of Tanzania"],
+    "National Bureau of Statistics": ["NBS", "National Bureau of Statistics"],
+    "Office of the Controller and Auditor General":
+        ["CAG", "Controller and Auditor General"],
+    "Organisation for Economic Co-operation and Development":
+        ["OECD", "Organisation for Economic Co-operation"],
+    "Lushoto District Council": ["Lushoto District Council"],
+}
+
+
+def ref_tokens(ref):
+    """Name tokens a reference can be cited by in the text."""
+    head = ref.split("(")[0].strip().rstrip(".").strip()
+    if head in CORPORATE_TOKENS:
+        return CORPORATE_TOKENS[head]
+    surnames = []
+    for part in re.split(r",\s*&|,", head):
+        part = part.strip()
+        if part:
+            surnames.append(part.split()[0].rstrip("."))
+    return surnames[:1] or [head]
+
+
+def ref_year(ref):
+    m = re.search(r"\((\d{4})\)", ref) or re.search(r"(\d{4})", ref)
+    return m.group(1)
+
+
+def is_cited(ref, text):
+    """True when the text cites this reference: an author name and the
+    publication year must occur in the same citation window. Matching the two
+    independently would misfire on financial years (2021/22) and on works
+    cited elsewhere in the document."""
+    year = ref_year(ref)
+    ypat = (r"(?:\(|,\s|;\s|et al\.,\s|and\s)" + year + r"(?![\d/\-])"
+            r"|" + year + r"\s*\)")
+    for tok in ref_tokens(ref):
+        for m in re.finditer(r"\b" + re.escape(tok) + r"\b", text):
+            window = text[max(0, m.start() - 90): m.end() + 90]
+            if re.search(ypat, window):
+                return True
+    return False
+
+
+def chapter_one_blocks():
+    """Title-page body blocks for a standalone Chapter One document: the
+    Chapter One segment plus a reference list limited to works it cites."""
+    start = next(i for i, (k, v) in enumerate(BLOCKS)
+                 if k == "h1" and v.upper().startswith("CHAPTER ONE"))
+    stop = next(i for i, (k, v) in enumerate(BLOCKS)
+                if k == "h1" and v.upper().startswith("CHAPTER TWO"))
+    segment = BLOCKS[start:stop]
+    while segment and segment[0][0] == "pagebreak":
+        segment = segment[1:]
+    text = " ".join(v for k, v in segment if k in ("p", "h2", "h3", "caption", "source"))
+    cited = [r for r in REFERENCES if is_cited(r, text)]
+    return segment + [("h1", "REFERENCES")] + [("ref", r) for r in cited], cited
+
+
+if CHAPTER_ONE_ONLY:
+    RENDER_BLOCKS, CITED_REFS = chapter_one_blocks()
+else:
+    RENDER_BLOCKS, CITED_REFS = BLOCKS, REFERENCES
 
 FONT = "Times New Roman"
 PAGE_H_PT = (29.7 - 2.54 - 2.54) * 28.3465    # usable text height in points (top margin 1 inch)
@@ -250,7 +326,7 @@ def add_table(spec):
 
 # ------------------------------------------------------------ render blocks --
 first_block = True
-for kind, payload in BLOCKS:
+for kind, payload in RENDER_BLOCKS:
     if kind == "pagebreak":
         if first_block:
             first_block = False
@@ -276,7 +352,12 @@ for kind, payload in BLOCKS:
     elif kind == "table":
         add_table(payload)
 
-OUT = "M&E System and Local Government Project Performance - Lushoto District - Research Proposal.docx"
+if CHAPTER_ONE_ONLY:
+    OUT = ("Chapter One - M&E System and Local Government Project Performance - "
+           "Lushoto District.docx")
+else:
+    OUT = ("M&E System and Local Government Project Performance - Lushoto District - "
+           "Research Proposal.docx")
 doc.save(OUT)
 print("saved:", OUT)
 
@@ -289,13 +370,18 @@ import estimate_pages
 from proposal_content import REFERENCES as _REFS
 
 PAGE_H_PT = estimate_pages.PAGE_H
-pages, per = estimate_pages.simulate(BLOCKS, verbose=False)
+pages, per = estimate_pages.simulate(RENDER_BLOCKS, verbose=False)
 print("\nEstimated layout (A4, top margin 1 inch -> usable text height %.0f pt)" % PAGE_H_PT)
 for k, v in per.items():
     print("  %-52s %6.0f pt  %5.2f pages" % (k[:52], v, v / PAGE_H_PT))
 print("  %-52s %6.0f pt  %5.2f pages" % ("BODY (packed)", sum(per.values()), sum(per.values()) / PAGE_H_PT))
 print("  TOTAL = %d pages (1 title page + %d body pages)" % (pages, pages - 1))
-print("  guide limit: not less than 15 and not more than 20 pages ->",
-      "OK" if 15 <= pages <= 20 else "OUT OF RANGE")
-print("  references: %d (guide requires 20-25) -> %s" % (len(_REFS), "OK" if 20 <= len(_REFS) <= 25 else "OUT OF RANGE"))
-print("  body prose words: %d" % sum(len(v.replace("*", "").split()) for k, v in BLOCKS if k == "p"))
+if CHAPTER_ONE_ONLY:
+    print("  mode: standalone CHAPTER ONE (title page + Ch. 1 + references cited in Ch. 1)")
+    print("  references cited in Chapter One: %d of %d" % (len(CITED_REFS), len(_REFS)))
+else:
+    print("  guide limit: not less than 15 and not more than 20 pages ->",
+          "OK" if 15 <= pages <= 20 else "OUT OF RANGE")
+    print("  references: %d (guide requires 20-25) -> %s"
+          % (len(_REFS), "OK" if 20 <= len(_REFS) <= 25 else "OUT OF RANGE"))
+print("  body prose words: %d" % sum(len(v.replace("*", "").split()) for k, v in RENDER_BLOCKS if k == "p"))
