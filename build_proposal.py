@@ -353,11 +353,9 @@ for kind, payload in RENDER_BLOCKS:
         add_table(payload)
 
 if CHAPTER_ONE_ONLY:
-    OUT = ("Chapter One - M&E System and Local Government Project Performance - "
-           "Lushoto District.docx")
+    OUT = "Chapter-One-ME-System-and-Local-Government-Project-Performance-Lushoto.docx"
 else:
-    OUT = ("M&E System and Local Government Project Performance - Lushoto District - "
-           "Research Proposal.docx")
+    OUT = "Research-Proposal-ME-System-and-Local-Government-Project-Performance-Lushoto.docx"
 doc.save(OUT)
 print("saved:", OUT)
 
